@@ -1,0 +1,12 @@
+﻿html, body {
+    height: 100%;
+    background-color: #f5f5f5;
+}
+
+.card {
+    min-width: 350px;
+}
+
+.form-container form {
+    width: 300px;
+}
