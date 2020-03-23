@@ -41,6 +41,14 @@
         "js/bootstrap.js",
         "js/bootstrap.min.js"
       ]
+    },
+    {
+      "library": "Chart.js@2.9.3",
+      "destination": "wwwroot/lib/Chart.js/",
+      "files": [
+        "Chart.min.js",
+        "Chart.js"
+      ]
     }
   ]
 }
