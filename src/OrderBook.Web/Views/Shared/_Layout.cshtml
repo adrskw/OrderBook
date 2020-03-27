@@ -1,13 +1,121 @@
 ﻿<!DOCTYPE html>
-
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@ViewBag.Title</title>
+    <environment include="Development">
+        <link href="~/lib/bootswatch/pulse/bootstrap.css" rel="stylesheet">
+    </environment>
+    <environment include="Staging,Production">
+        <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/pulse/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-FnujoHKLiA0lyWE/5kNhcd8lfMILbUAZFAT89u11OhZI7Gt135tk3bGYVBC2xmJ5" crossorigin="anonymous">
+    </environment>
+    <link href="~/css/dashboard.css" rel="stylesheet">
 </head>
 <body>
-    <div>
-        @RenderBody()
+    <nav class="navbar navbar-dark navbar-expand bg-primary fixed-top p-0 shadow">
+        <a asp-controller="dashboard" asp-action="index" class="navbar-brand col-sm-3 col-lg-2 text-truncate">Company name nam</a>
+        <ul class="navbar-nav ml-auto px-3">
+            <li class="nav-item dropdown">
+                <a asp-controller="user" asp-action="index" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Adrian <span class="font-italic">(manager)</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" asp-controller="user" asp-action="settings"><i class="fas fa-cog fa-fw"></i>Ustawienia</a>
+                    <a class="dropdown-item" asp-controller="user" asp-action="logout"><i class="fas fa-sign-out-alt fa-fw"></i>Wyloguj</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-sm-3 col-lg-2 bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <a class="nav-link h4 d-block d-sm-none" data-toggle="collapse" href="#sideMenu" role="button" aria-expanded="false" aria-controls="sideMenu">
+                        <i class="fas fa-bars fa-fw"></i>
+                        MENU
+                    </a>
+                    <ul class="nav flex-column flex-nowrap d-sm-flex collapse" id="sideMenu">
+                        <li class="nav-item">
+                            <a class="nav-link active" asp-controller="dashboard" asp-action="index">
+                                <i class="fas fa-home fa-lg fa-fw"></i>
+                                Strona główna <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="orders" asp-action="index">
+                                <i class="far fa-file-alt fa-lg fa-fw"></i>
+                                Zamówienia
+                            </a>
+                            <ul class="nav flex-column sidebar-submenu">
+                                <li>
+                                    <a class="nav-link" asp-controller="orders" asp-action="index">
+                                        <i class="fas fa-angle-right fa-fw"></i>
+                                        wszystkie
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" asp-controller="orders" asp-action="sent">
+                                        <i class="fas fa-angle-right fa-fw"></i>
+                                        wysłane
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="nav-link active" asp-controller="orders" asp-action="unsent">
+                                        <i class="fas fa-angle-right fa-fw"></i>
+                                        do wysłania
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" asp-controller="orders" asp-action="unpaid">
+                                        <i class="fas fa-angle-right fa-fw"></i>
+                                        nieopłacone
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="returns" asp-action="index">
+                                <i class="fas fa-undo-alt fa-lg fa-fw"></i>
+                                Zwroty
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="employees" asp-action="index">
+                                <i class="fas fa-users fa-lg fa-fw"></i>
+                                Pracownicy
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main role="main" class="ml-auto col-sm-9 col-lg-10 px-4">
+                @RenderBody()
+            </main>
+        </div>
     </div>
+    <environment include="Development">
+        <script src="~/lib/jquery/jquery.js"></script>
+        <script src="~/lib/popper.js/umd/popper.js"></script>
+        <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
+        <script src="~/lib/font-awesome/js/all.js"></script>
+        <script src="~/lib/Chart.js/Chart.js"></script>
+    </environment>
+    <environment include="Staging,Production">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"
+                integrity="sha256-/ijcOLwFf26xEYAjW75FizKVo5tnTYiQddPZoLUHHZ8=" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+                integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/all.min.js"
+                integrity="sha256-MAgcygDRahs+F/Nk5Vz387whB4kSK9NXlDN3w58LLq0=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+                integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+    </environment>
+    <script src="~/js/dashboard.js"></script>
 </body>
 </html>
