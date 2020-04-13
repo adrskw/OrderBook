@@ -49,6 +49,15 @@
         "Chart.min.js",
         "Chart.js"
       ]
+    },
+    {
+      "library": "datatables@1.10.20",
+      "destination": "wwwroot/lib/datatables/",
+      "files": [
+        "css/dataTables.bootstrap4.css",
+        "js/jquery.dataTables.min.js",
+        "js/dataTables.bootstrap4.min.js"
+      ]
     }
   ]
 }
