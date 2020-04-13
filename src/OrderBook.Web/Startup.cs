@@ -25,7 +25,7 @@ namespace OrderBook.Web
             services.AddDbContextPool<ApplicationDbContext>(
               options => options.UseSqlServer(Configuration.GetConnectionString("OrderBookDBConnection")));
             services.AddControllersWithViews();
-            services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
