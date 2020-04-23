@@ -5,10 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200414195013_InitialMigration.cs" />
+    <Compile Remove="Migrations\20200414195013_InitialMigration.Designer.cs" />
+    <Compile Remove="Migrations\20200414201053_InitialCreateEmployee.cs" />
+    <Compile Remove="Migrations\20200414201053_InitialCreateEmployee.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="ViewModels\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">
       <PrivateAssets>all</PrivateAssets>
