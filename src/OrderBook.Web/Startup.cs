@@ -24,13 +24,24 @@ namespace OrderBook.Web
         {
             services.AddDbContextPool<ApplicationDbContext>(
               options => options.UseSqlServer(Configuration.GetConnectionString("OrderBookDBConnection")));
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 6;
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+            }).AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app,
+                                IWebHostEnvironment env,
+                                RoleManager<IdentityRole> roleManager,
+                                UserManager<ApplicationUser> userManager)
         {
             if (env.IsDevelopment())
             {
@@ -53,6 +64,8 @@ namespace OrderBook.Web
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            ApplicationDbInitializer.SeedInitialData(roleManager, userManager);
         }
     }
 }
