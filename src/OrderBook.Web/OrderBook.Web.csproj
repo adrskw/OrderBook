@@ -5,13 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20200414195013_InitialMigration.cs" />
-    <Compile Remove="Migrations\20200414195013_InitialMigration.Designer.cs" />
-    <Compile Remove="Migrations\20200414201053_InitialCreateEmployee.cs" />
-    <Compile Remove="Migrations\20200414201053_InitialCreateEmployee.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Folder Include="Repositories\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
 
