@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@inject UserManager<ApplicationUser> userManager;
+
+@{
+    ApplicationUser user = await userManager.GetUserAsync(User);
+    string firstName = user.FirstName;
+    string lastName = user.LastName;
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -22,11 +30,13 @@
         <ul class="navbar-nav ml-auto px-3">
             <li class="nav-item dropdown">
                 <a asp-controller="user" asp-action="index" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Adrian <span class="font-italic">(manager)</span>
+                    @firstName @lastName
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" asp-controller="user" asp-action="settings"><i class="fas fa-cog fa-fw"></i>Ustawienia</a>
-                    <a class="dropdown-item" asp-controller="user" asp-action="logout"><i class="fas fa-sign-out-alt fa-fw"></i>Wyloguj</a>
+                    <form method="post" asp-controller="home" asp-action="logout">
+                        <button type="submit" class="dropdown-item btn btn-link"><i class="fas fa-sign-out-alt fa-fw"></i>Wyloguj</button>
+                    </form>
                 </div>
             </li>
         </ul>

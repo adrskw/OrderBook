@@ -1,4 +1,6 @@
-﻿@{
+﻿@model LoginViewModel
+
+@{
     ViewBag.Title = "Logowanie";
 }
 <div class="container justify-content-center h-100">
@@ -12,27 +14,31 @@
                 </h3>
                 <hr>
                 <div class="d-flex form-container justify-content-center">
-                    <form>
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly"
+                             class="form-group text-danger text-center validation-summary-unstyled"></div>
                         <div class="form-group">
                             <div class="input-group">
-                                <input name="login" class="form-control" placeholder="login" type="text">
+                                <input asp-for="Login" class="form-control">
                                 <div class="input-group-append">
                                     <span class="input-group-text"> <i class="fas fa-user"></i> </span>
                                 </div>
                             </div>
+                            <span asp-validation-for="Login" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <div class="input-group">
-                                <input name="password" class="form-control" placeholder="hasło" type="password">
+                                <input asp-for="Password" class="form-control">
                                 <div class="input-group-append">
                                     <span class="input-group-text"> <i class="fas fa-key"></i> </span>
                                 </div>
                             </div>
+                            <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
-                                <input name="rememberMe" class="custom-control-input" type="checkbox" id="rememberMe">
-                                <label class="custom-control-label" for="rememberMe">Zapamiętaj mnie</label>
+                                <input asp-for="RememberMe" class="custom-control-input">
+                                <label asp-for="RememberMe" class="custom-control-label"></label>
                             </div>
                         </div>
                         <div class="form-group">
