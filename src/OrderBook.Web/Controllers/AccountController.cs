@@ -23,6 +23,11 @@ namespace OrderBook.Web.Controllers
         [AllowAnonymous]
         public IActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("index", "dashboard");
+            }
+
             return View();
         }
 
@@ -31,8 +36,13 @@ namespace OrderBook.Web.Controllers
         [Route("Account/Login")]
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("index", "dashboard");
+            }
+
             if (ModelState.IsValid)
             {
                 var result = await signInManager.PasswordSignInAsync(userName: model.Login,
@@ -42,6 +52,11 @@ namespace OrderBook.Web.Controllers
 
                 if (result.Succeeded)
                 {
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        return LocalRedirect(returnUrl);
+                    }
+
                     return RedirectToAction("index", "dashboard");
                 }
 
@@ -55,7 +70,7 @@ namespace OrderBook.Web.Controllers
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
-            return RedirectToAction("index", "home");
+            return RedirectToAction("index", "");
         }
     }
 }
