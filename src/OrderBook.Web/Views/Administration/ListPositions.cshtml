@@ -1,0 +1,41 @@
+﻿@model IEnumerable<IdentityRole>
+@{
+    ViewBag.Title = "Stanowiska";
+}
+
+<h2 class="pt-3 mb-3">@ViewBag.Title</h2>
+<a asp-controller="Administration" asp-action="CreatePosition"
+   class="btn btn-outline-primary mb-2">Stwórz nowe stanowisko</a>
+
+<div class="table-responsive">
+    <table class="table table-hover" id="positionsTable">
+        <thead>
+            <tr>
+                <th class="col-6 col-md-8 col-lg-9">Nazwa</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var position in Model)
+            {
+                <tr>
+                    <td class="align-middle">
+                        @position.Name
+                    </td>
+                    <td>
+                        @if (position.Name != "Admin")
+                        {
+                            <a asp-controller="Administration" asp-action="EditPosition" asp-route-id="@position.Id"
+                               class="btn btn-outline-primary mr-1">
+                                Edytuj
+                            </a>
+                            <button type="button" class="btn btn-outline-primary"
+                                Usuń
+                            </button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
