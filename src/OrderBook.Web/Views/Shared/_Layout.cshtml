@@ -52,37 +52,37 @@
                     </a>
                     <ul class="nav flex-column flex-nowrap d-sm-flex collapse" id="sideMenu">
                         <li class="nav-item">
-                            <a class="nav-link active" asp-controller="dashboard" asp-action="index">
+                            <a class="nav-link active" asp-controller="Dashboard" asp-action="Index">
                                 <i class="fas fa-home fa-lg fa-fw"></i>
                                 Strona główna <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="orders" asp-action="index">
+                            <a class="nav-link" asp-controller="Orders" asp-action="Index">
                                 <i class="far fa-file-alt fa-lg fa-fw"></i>
                                 Zamówienia
                             </a>
                             <ul class="nav flex-column sidebar-submenu">
                                 <li>
-                                    <a class="nav-link" asp-controller="orders" asp-action="index">
+                                    <a class="nav-link" asp-controller="Orders" asp-action="Index">
                                         <i class="fas fa-angle-right fa-fw"></i>
                                         wszystkie
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="nav-link" asp-controller="orders" asp-action="sent">
+                                    <a class="nav-link" asp-controller="Orders" asp-action="Sent">
                                         <i class="fas fa-angle-right fa-fw"></i>
                                         wysłane
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="nav-link active" asp-controller="orders" asp-action="unsent">
+                                    <a class="nav-link active" asp-controller="Orders" asp-action="Unsent">
                                         <i class="fas fa-angle-right fa-fw"></i>
                                         do wysłania
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="nav-link" asp-controller="orders" asp-action="unpaid">
+                                    <a class="nav-link" asp-controller="Orders" asp-action="Unpaid">
                                         <i class="fas fa-angle-right fa-fw"></i>
                                         nieopłacone
                                     </a>
@@ -90,16 +90,42 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="returns" asp-action="index">
+                            <a class="nav-link" asp-controller="Returns" asp-action="Index">
                                 <i class="fas fa-undo-alt fa-lg fa-fw"></i>
                                 Zwroty
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="employees" asp-action="index">
-                                <i class="fas fa-users fa-lg fa-fw"></i>
-                                Pracownicy
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-users-cog fa-lg fa-fw"></i>
+                                Administracja
                             </a>
+                            <ul class="nav flex-column sidebar-submenu">
+                                <li>
+                                    <a class="nav-link" asp-controller="Administration" asp-action="ListProductCategories">
+                                        <i class="fas fa-angle-right fa-fw"></i>
+                                        Kategorie produktów
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" asp-controller="Administration" asp-action="ListEmployees">
+                                        <i class="fas fa-angle-right fa-fw"></i>
+                                        Pracownicy
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" asp-controller="Administration" asp-action="ListPositions">
+                                        <i class="fas fa-angle-right fa-fw"></i>
+                                        Stanowiska
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="nav-link active" asp-controller="Administration" asp-action="Index">
+                                        <i class="fas fa-angle-right fa-fw"></i>
+                                        Ustawienia
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
