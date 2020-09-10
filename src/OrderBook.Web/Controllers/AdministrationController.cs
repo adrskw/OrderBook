@@ -28,6 +28,17 @@ namespace OrderBook.Web.Controllers
             return View();
         }
 
+        #region Employee Actions
+
+        public IActionResult ListEmployees()
+        {
+            var employees = userManager.Users;
+
+            return View(employees);
+        }
+
+        #endregion Employee Actions
+
         #region Position Actions
 
         public IActionResult ListPositions()

@@ -1,0 +1,74 @@
+﻿@model IEnumerable<ApplicationUser>
+@{
+    ViewBag.Title = "Pracownicy";
+}
+
+<h2 class="pt-3 mb-3">@ViewBag.Title</h2>
+<a asp-controller="Administration" asp-action="CreateEmployee"
+   class="btn btn-outline-primary mb-2">Stwórz nowego pracownika</a>
+
+<div class="table-responsive">
+    <table class="table table-hover" id="employeesTable">
+        <thead>
+            <tr>
+                <th class="col-3 col-md-3 col-lg-2">Login</th>
+                <th class="col-4 col-md-5 col-lg-7">Dane osobowe</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                string employeeFullName = $"{employee.FirstName} {employee.LastName}";
+
+                <tr>
+                    <td class="align-middle">
+                        @employee.UserName
+                    </td>
+                    <td class="align-middle">
+                        @employeeFullName
+                    </td>
+                    <td>
+                        <a asp-controller="Administration" asp-action="EditEmployee" asp-route-id="@employee.Id"
+                           class="btn btn-outline-primary mr-1">
+                            Edytuj
+                        </a>
+                        <button type="button" class="btn btn-outline-primary"
+                                data-record-id="@employee.Id"
+                                data-record-title="@employee.UserName (@employeeFullName)"
+                                data-toggle="modal" data-target="#confirmDelete">
+                            Usuń
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteLabel">Usuń pracownika</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Czy na pewno chcesz usunąć pracownika <b class="title"></b>?</p>
+            </div>
+            <div class="modal-footer">
+                <form class="form-inline" method="post" asp-controller="Administration" asp-action="DeleteEmployee">
+                    <input type="hidden" name="EmployeeId" id="recordId">
+                    <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Nie</button>
+                    <button type="submit" class="btn btn-primary">Tak</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/confirmDeleteModal.js"></script>
+}
