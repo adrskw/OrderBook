@@ -30,6 +30,8 @@
                                 Edytuj
                             </a>
                             <button type="button" class="btn btn-outline-primary"
+                                    data-record-id="@position.Id" data-record-title="@position.Name"
+                                    data-toggle="modal" data-target="#confirmDelete">
                                 Usuń
                             </button>
                         }
@@ -39,3 +41,30 @@
         </tbody>
     </table>
 </div>
+
+<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteLabel">Usuń stanowisko</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Czy na pewno chcesz usunąć stanowisko <b class="title"></b>?</p>
+            </div>
+            <div class="modal-footer">
+                <form class="form-inline" method="post" asp-controller="Administration" asp-action="DeletePosition">
+                    <input type="hidden" name="PositionId" id="recordId">
+                    <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Nie</button>
+                    <button type="submit" class="btn btn-primary">Tak</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/confirmDeleteModal.js"></script>
+}
