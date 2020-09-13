@@ -1,0 +1,55 @@
+﻿@model CreateEmployeeViewModel
+@{
+    ViewBag.Title = "Stwórz nowego pracownika";
+}
+
+<h2 class="pt-3 mb-3">@ViewBag.Title</h2>
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger validation-summary-unstyled"></div>
+    <div class="form-row">
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="Login"></label>
+            <input asp-for="Login" class="form-control">
+            <span asp-validation-for="Login" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control">
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="FirstName"></label>
+            <input asp-for="FirstName" class="form-control">
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" class="form-control">
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control">
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="ConfirmPassword"></label>
+            <input asp-for="ConfirmPassword" class="form-control">
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <a asp-controller="Administration" asp-action="ListEmployees" class="btn btn-secondary mr-1">Wróć</a>
+
+            <button type="submit" class="btn btn-primary">Stwórz</button>
+        </div>
+    </div>
+</form>

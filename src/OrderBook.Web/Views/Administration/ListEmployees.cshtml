@@ -33,12 +33,16 @@
                            class="btn btn-outline-primary mr-1">
                             Edytuj
                         </a>
-                        <button type="button" class="btn btn-outline-primary"
-                                data-record-id="@employee.Id"
-                                data-record-title="@employee.UserName (@employeeFullName)"
-                                data-toggle="modal" data-target="#confirmDelete">
-                            Usuń
-                        </button>
+
+                        @if (employee.UserName != "admin")
+                        {
+                            <button type="button" class="btn btn-outline-primary"
+                                    data-record-id="@employee.Id"
+                                    data-record-title="@employee.UserName (@employeeFullName)"
+                                    data-toggle="modal" data-target="#confirmDelete">
+                                Usuń
+                            </button>
+                        }
                     </td>
                 </tr>
             }
@@ -60,7 +64,7 @@
             </div>
             <div class="modal-footer">
                 <form class="form-inline" method="post" asp-controller="Administration" asp-action="DeleteEmployee">
-                    <input type="hidden" name="EmployeeId" id="recordId">
+                    <input type="hidden" name="id" id="recordId">
                     <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Nie</button>
                     <button type="submit" class="btn btn-primary">Tak</button>
                 </form>

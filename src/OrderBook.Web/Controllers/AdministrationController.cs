@@ -37,6 +37,134 @@ namespace OrderBook.Web.Controllers
             return View(employees);
         }
 
+        [HttpGet]
+        public IActionResult CreateEmployee()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateEmployee(CreateEmployeeViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                ApplicationUser employee = new ApplicationUser()
+                {
+                    UserName = model.Login,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName
+                };
+
+                var result = await userManager.CreateAsync(employee, model.Password);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListEmployees", "Administration");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditEmployee(string id)
+        {
+            var employee = await userManager.FindByIdAsync(id);
+
+            if (employee == null)
+            {
+                ModelState.AddModelError("id", "Nie znaleziono pracownika o danym identyfikatorze");
+
+                return View();
+            }
+
+            var model = new EditEmployeeViewModel()
+            {
+                Id = id,
+                Login = employee.UserName,
+                Email = employee.Email,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditEmployee(EditEmployeeViewModel model)
+        {
+            var employee = await userManager.FindByIdAsync(model.Id);
+
+            if (employee == null)
+            {
+                ModelState.AddModelError("id", "Nie znaleziono pracownika o danym identyfikatorze");
+
+                return View();
+            }
+            else if (employee.UserName == "admin" && employee.UserName != model.Login)
+            {
+                ModelState.AddModelError("login", "Nie można zmienić loginu administratora");
+            }
+            else
+            {
+                employee.UserName = model.Login;
+                employee.Email = model.Email;
+                employee.FirstName = model.FirstName;
+                employee.LastName = model.LastName;
+
+                var result = await userManager.UpdateAsync(employee);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListEmployees");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteEmployee(string id)
+        {
+            var employee = await userManager.FindByIdAsync(id);
+
+            if (employee == null)
+            {
+                ModelState.AddModelError("id", "Nie znaleziono stanowiska o danym identyfikatorze");
+            }
+            else if (employee.UserName == "admin")
+            {
+                ModelState.AddModelError("", "Nie możesz usunąć administratora");
+            }
+            else
+            {
+                var result = await userManager.DeleteAsync(employee);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ListEmployees");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+
+            return View();
+        }
+
         #endregion Employee Actions
 
         #region Position Actions
