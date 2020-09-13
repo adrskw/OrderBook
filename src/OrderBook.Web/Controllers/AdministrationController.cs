@@ -273,9 +273,9 @@ namespace OrderBook.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeletePosition(DeletePositionViewModel model)
+        public async Task<IActionResult> DeletePosition(string id)
         {
-            var position = await roleManager.FindByIdAsync(model.Id);
+            var position = await roleManager.FindByIdAsync(id);
 
             if (position == null)
             {
