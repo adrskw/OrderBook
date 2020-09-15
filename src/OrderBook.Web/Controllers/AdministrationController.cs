@@ -137,15 +137,17 @@ namespace OrderBook.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteEmployee(string id)
         {
+            ViewBag.Title = "Usuń pracownika";
+
             var employee = await userManager.FindByIdAsync(id);
 
             if (employee == null)
             {
-                ModelState.AddModelError("id", "Nie znaleziono stanowiska o danym identyfikatorze");
+                ViewBag.ErrorMessage = "Nie znaleziono pracownika o danym identyfikatorze";
             }
             else if (employee.UserName == "admin")
             {
-                ModelState.AddModelError("", "Nie możesz usunąć administratora");
+                ViewBag.ErrorMessage = "Nie możesz usunąć administratora";
             }
             else
             {
@@ -156,13 +158,10 @@ namespace OrderBook.Web.Controllers
                     return RedirectToAction("ListEmployees");
                 }
 
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
+                ViewBag.ErrorMessage = "Wystąpił nieznany błąd podczas usuwania pracownika";
             }
 
-            return View();
+            return View("Error");
         }
 
         #endregion Employee Actions
@@ -275,15 +274,17 @@ namespace OrderBook.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> DeletePosition(string id)
         {
+            ViewBag.Title = "Usuń stanowisko";
+
             var position = await roleManager.FindByIdAsync(id);
 
             if (position == null)
             {
-                ModelState.AddModelError("id", "Nie znaleziono stanowiska o danym identyfikatorze");
+                ViewBag.ErrorMessage = "Nie znaleziono stanowiska o danym identyfikatorze";
             }
             else if (position.Name == "Admin")
             {
-                ModelState.AddModelError("", "Nie możesz usunąć stanowiska administratora");
+                ViewBag.ErrorMessage = "Nie możesz usunąć stanowiska administratora";
             }
             else
             {
@@ -294,13 +295,10 @@ namespace OrderBook.Web.Controllers
                     return RedirectToAction("ListPositions");
                 }
 
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
+                ViewBag.ErrorMessage = "Wystąpił nieznany błąd podczas usuwania stanowiska";
             }
 
-            return View();
+            return View("Error");
         }
 
         #endregion Position Actions
