@@ -57,6 +57,7 @@ namespace OrderBook.Web
             }
             else
             {
+                app.UseExceptionHandler("/Error");
                 app.UseStatusCodePagesWithReExecute("/Error/{0}");
                 app.UseHsts();
             }

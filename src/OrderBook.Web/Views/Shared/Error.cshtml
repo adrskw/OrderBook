@@ -1,1 +1,14 @@
-﻿<p>@ViewBag.ErrorMessage</p>
+﻿@if (ViewBag.Title == null)
+{
+    ViewBag.Title = "Wystąpił błąd";
+
+    <p class="pt-3">@ViewBag.ErrorMessage</p>
+}
+else
+{
+    <h2 class="pt-3 mb-3">@ViewBag.Title</h2>
+
+    <p>@ViewBag.ErrorMessage</p>
+}
+
+<button type="button" class="btn btn-secondary" onclick="window.history.back()">Wróć</button>

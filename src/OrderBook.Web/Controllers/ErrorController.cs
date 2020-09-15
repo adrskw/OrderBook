@@ -10,9 +10,12 @@ namespace OrderBook.Web.Controllers
 {
     public class ErrorController : Controller
     {
+        [Route("Error")]
         [Route("Error/{statusCode}")]
         public IActionResult Error(int statusCode)
         {
+            ViewBag.Title = "Wystąpił błąd";
+
             switch (statusCode)
             {
                 case 403:
@@ -20,7 +23,11 @@ namespace OrderBook.Web.Controllers
                     break;
 
                 case 404:
-                    ViewBag.ErrorMessage = "Przepraszamy, strona nie została znaleziona";
+                    ViewBag.ErrorMessage = "Przepraszamy, strona, której szukasz, nie została znaleziona";
+                    break;
+
+                default:
+                    ViewBag.ErrorMessage = "Serwer napotkał niespodziewane trudności, które uniemożliwiły zrealizowanie żądania";
                     break;
             }
 
