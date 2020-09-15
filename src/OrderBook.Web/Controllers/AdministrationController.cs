@@ -75,13 +75,15 @@ namespace OrderBook.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> EditEmployee(string id)
         {
+            ViewBag.Title = "Edytuj pracownika";
+
             var employee = await userManager.FindByIdAsync(id);
 
             if (employee == null)
             {
-                ModelState.AddModelError("id", "Nie znaleziono pracownika o danym identyfikatorze");
+                ViewBag.ErrorMessage = "Nie znaleziono pracownika o danym identyfikatorze";
 
-                return View();
+                return View("Error");
             }
 
             var model = new EditEmployeeViewModel()
@@ -99,13 +101,15 @@ namespace OrderBook.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> EditEmployee(EditEmployeeViewModel model)
         {
+            ViewBag.Title = "Edytuj pracownika";
+
             var employee = await userManager.FindByIdAsync(model.Id);
 
             if (employee == null)
             {
-                ModelState.AddModelError("id", "Nie znaleziono pracownika o danym identyfikatorze");
+                ViewBag.ErrorMessage = "Nie znaleziono pracownika o danym identyfikatorze";
 
-                return View();
+                return View("Error");
             }
             else if (employee.UserName == "admin" && employee.UserName != model.Login)
             {
@@ -210,20 +214,22 @@ namespace OrderBook.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> EditPosition(string id)
         {
+            ViewBag.Title = "Edytuj stanowisko";
+
             var position = await roleManager.FindByIdAsync(id);
 
             if (position == null)
             {
-                ModelState.AddModelError("id", "Nie znaleziono stanowiska o danym identyfikatorze");
+                ViewBag.ErrorMessage = "Nie znaleziono stanowiska o danym identyfikatorze";
 
-                return View();
+                return View("Error");
             }
 
             if (position.Name == "Admin")
             {
-                ModelState.AddModelError("", "Nie możesz edytować stanowiska administratora");
+                ViewBag.ErrorMessage = "Nie możesz edytować stanowiska administratora";
 
-                return View();
+                return View("Error");
             }
 
             var model = new EditPositionViewModel()
@@ -238,19 +244,21 @@ namespace OrderBook.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> EditPosition(EditPositionViewModel model)
         {
+            ViewBag.Title = "Edytuj stanowisko";
+
             var position = await roleManager.FindByIdAsync(model.Id);
 
             if (position == null)
             {
-                ModelState.AddModelError("id", "Nie znaleziono stanowiska o danym identyfikatorze");
+                ViewBag.ErrorMessage = "Nie znaleziono stanowiska o danym identyfikatorze";
 
-                return View();
+                return View("Error");
             }
             else if (position.Name == "Admin")
             {
-                ModelState.AddModelError("", "Nie możesz edytować stanowiska administratora");
+                ViewBag.ErrorMessage = "Nie możesz edytować stanowiska administratora";
 
-                return View();
+                return View("Error");
             }
             else
             {
