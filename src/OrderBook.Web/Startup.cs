@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OrderBook.Web.Models;
+using OrderBook.Web.Repositories;
 
 namespace OrderBook.Web
 {
@@ -43,6 +44,8 @@ namespace OrderBook.Web
                                 .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             });
+
+            services.AddScoped<IOrderRepository, OrderRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
