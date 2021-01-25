@@ -9,6 +9,6 @@ namespace OrderBook.Web.Models
     {
         bool IsDeleted { get; set; }
         DateTime? DeletedAt { get; set; }
-        ApplicationUser DeletedBy { get; set; }
+        string DeletedBy { get; set; }
     }
 }
