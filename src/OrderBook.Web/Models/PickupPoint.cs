@@ -12,10 +12,12 @@ namespace OrderBook.Web.Models
         InpostPaczkomaty
     }
 
-    public class PickupPoint
+    public class PickupPoint : IDeletable
     {
+        public int Id { get; set; }
+
         [Required]
-        public string Id { get; set; }
+        public string PointId { get; set; }
 
         [Required]
         public PickupPointCarrier Carrier { get; set; }
@@ -33,5 +35,9 @@ namespace OrderBook.Web.Models
 
         [Required]
         public string ZipCode { get; set; }
+
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedAt { get; set; }
+        public string DeletedBy { get; set; }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OrderBook.Web.Models
 {
-    public class Address
+    public class Address : IDeletable
     {
         [Key]
         [ForeignKey("Customer")]
@@ -26,5 +26,9 @@ namespace OrderBook.Web.Models
         public string Country { get; set; }
 
         public Customer Customer { get; set; }
+
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedAt { get; set; }
+        public string DeletedBy { get; set; }
     }
 }

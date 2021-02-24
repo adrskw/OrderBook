@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OrderBook.Web.Models
 {
-    public class Product
+    public class Product : ITrackable, IDeletable
     {
         public int Id { get; set; }
 
@@ -24,5 +24,16 @@ namespace OrderBook.Web.Models
         public string Currency { get; set; }
 
         public int AllegroOfferId { get; set; }
+
+        public ICollection<OrderDetail> OrderDetails { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public string CreatedBy { get; set; }
+        public string UpdatedBy { get; set; }
+
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedAt { get; set; }
+        public string DeletedBy { get; set; }
     }
 }

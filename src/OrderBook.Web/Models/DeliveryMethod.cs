@@ -13,7 +13,7 @@ namespace OrderBook.Web.Models
         InpostPaczkomaty
     }
 
-    public class DeliveryMethod
+    public class DeliveryMethod : IDeletable
     {
         public int Id { get; set; }
 
@@ -32,5 +32,9 @@ namespace OrderBook.Web.Models
 
         [Required]
         public bool IsCashOnDelivery { get; set; }
+
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedAt { get; set; }
+        public string DeletedBy { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OrderBook.Web.Models
 {
-    public class Customer
+    public class Customer : ITrackable, IDeletable
     {
         public int Id { get; set; }
 
@@ -26,5 +26,14 @@ namespace OrderBook.Web.Models
         public ICollection<DeliveryAddress> DeliveryAddresses { get; set; }
         public Invoice Invoice { get; set; }
         public string Note { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public string CreatedBy { get; set; }
+        public string UpdatedBy { get; set; }
+
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedAt { get; set; }
+        public string DeletedBy { get; set; }
     }
 }

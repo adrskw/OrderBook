@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OrderBook.Web.Models
 {
-    public class DeliveryAddress
+    public class DeliveryAddress : IDeletable
     {
         public int Id { get; set; }
 
@@ -38,5 +38,9 @@ namespace OrderBook.Web.Models
         public string PhoneNumber { get; set; }
 
         public PickupPoint PickupPoint { get; set; }
+
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedAt { get; set; }
+        public string DeletedBy { get; set; }
     }
 }

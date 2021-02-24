@@ -14,7 +14,7 @@ namespace OrderBook.Web.Models
         CashOnDelivery
     }
 
-    public class Payment
+    public class Payment : ITrackable
     {
         [Key]
         [ForeignKey("Order")]
@@ -39,5 +39,10 @@ namespace OrderBook.Web.Models
         public string Note { get; set; }
 
         public Order Order { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public string CreatedBy { get; set; }
+        public string UpdatedBy { get; set; }
     }
 }

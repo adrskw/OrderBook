@@ -12,6 +12,7 @@ namespace OrderBook.Web.Models
         Cancelled,
         Unpaid,
         Paid,
+        Processing,
         ReadyForShipment,
         Sent,
         Returned,
@@ -24,7 +25,7 @@ namespace OrderBook.Web.Models
         Allegro
     }
 
-    public class Order
+    public class Order : ITrackable, IDeletable
     {
         public int Id { get; set; }
 
@@ -55,9 +56,17 @@ namespace OrderBook.Web.Models
         [Required]
         public DateTime OrderDate { get; set; }
 
-        public DateTime? LastUpdateDate { get; set; }
         public DateTime? SentDate { get; set; }
         public string Note { get; set; }
         public AllegroOrderData AllegroOrderData { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public string CreatedBy { get; set; }
+        public string UpdatedBy { get; set; }
+
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedAt { get; set; }
+        public string DeletedBy { get; set; }
     }
 }
