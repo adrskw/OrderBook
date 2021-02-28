@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.CodeAnalysis.Differencing;
 using OrderBook.Web.Models;
+using OrderBook.Web.Repositories;
 using OrderBook.Web.ViewModels;
 
 namespace OrderBook.Web.Controllers
@@ -15,12 +16,15 @@ namespace OrderBook.Web.Controllers
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IProductCategoryRepository productCategoryRepository;
 
         public AdministrationController(RoleManager<IdentityRole> roleManager,
-                                        UserManager<ApplicationUser> userManager)
+                                        UserManager<ApplicationUser> userManager,
+                                        IProductCategoryRepository productCategoryRepository)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
+            this.productCategoryRepository = productCategoryRepository;
         }
 
         public IActionResult Index()
@@ -310,5 +314,14 @@ namespace OrderBook.Web.Controllers
         }
 
         #endregion Position Actions
+        #region Product Category Actions
+
+        public IActionResult ListProductCategories()
+        {
+            var productCategories = productCategoryRepository.GetAllProductCategories();
+
+            return View(productCategories);
+        }
+        #endregion Product Category Actions
     }
 }

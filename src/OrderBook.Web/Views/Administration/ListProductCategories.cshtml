@@ -1,0 +1,74 @@
+﻿@model IEnumerable<ProductCategory>
+@{
+    ViewBag.Title = "Kategorie produktów";
+}
+
+<h2 class="pt-3 mb-3">@ViewBag.Title</h2>
+<a asp-controller="Administration" asp-action="CreateProductCategory"
+   class="btn btn-outline-primary mb-2">Stwórz nową kategorię produktu</a>
+
+@if (Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-hover" id="productCategoriesTable">
+            <thead>
+                <tr>
+                    <th class="col-6 col-md-8 col-lg-9">Nazwa</th>
+                    <th>Akcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var productCategory in Model)
+                {
+                    <tr>
+                        <td class="align-middle">
+                            @productCategory.Name
+                        </td>
+                        <td>
+                            <a asp-controller="Administration" asp-action="EditProductCategory" asp-route-id="@productCategory.Id"
+                               class="btn btn-outline-primary mr-1">
+                                Edytuj
+                            </a>
+                            <button type="button" class="btn btn-outline-primary"
+                                    data-record-id="@productCategory.Id" data-record-title="@productCategory.Name"
+                                    data-toggle="modal" data-target="#confirmDelete">
+                                Usuń
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p class="pt-2">Baza nie zawiera żadnych kategorii produktów</p>
+}
+
+<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteLabel">Usuń kategorię produktu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Czy na pewno chcesz usunąć kategorię <b class="title"></b>?</p>
+            </div>
+            <div class="modal-footer">
+                <form class="form-inline" method="post" asp-controller="Administration" asp-action="DeleteProductCategory">
+                    <input type="hidden" name="id" id="recordId">
+                    <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Nie</button>
+                    <button type="submit" class="btn btn-primary">Tak</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/confirmDeleteModal.js"></script>
+}
