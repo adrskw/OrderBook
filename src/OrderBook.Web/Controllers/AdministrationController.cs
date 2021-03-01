@@ -20,10 +20,12 @@ namespace OrderBook.Web.Controllers
 
         public AdministrationController(RoleManager<IdentityRole> roleManager,
                                         UserManager<ApplicationUser> userManager,
+                                        IProductRepository productRepository,
                                         IProductCategoryRepository productCategoryRepository)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
+            this.productRepository = productRepository;
             this.productCategoryRepository = productCategoryRepository;
         }
 
@@ -314,6 +316,18 @@ namespace OrderBook.Web.Controllers
         }
 
         #endregion Position Actions
+
+        #region Product Actions
+
+        public IActionResult ListProducts()
+        {
+            var products = productRepository.GetAllProducts();
+
+            return View(products);
+        }
+
+        #endregion Product Actions
+
         #region Product Category Actions
 
         public IActionResult ListProductCategories()
