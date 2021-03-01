@@ -322,6 +322,91 @@ namespace OrderBook.Web.Controllers
 
             return View(productCategories);
         }
+
+        [HttpGet]
+        public IActionResult CreateProductCategory()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateProductCategory(CreateProductCategoryViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                ProductCategory productCategory = new ProductCategory()
+                {
+                    Name = model.ProductCategoryName
+                };
+
+                productCategoryRepository.Add(productCategory);
+                productCategoryRepository.Save();
+
+                return RedirectToAction("ListProductCategories");
+            }
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult EditProductCategory(int id)
+        {
+            var productCategory = productCategoryRepository.GetById(id);
+
+            if (productCategory == null)
+            {
+                ViewBag.Title = "Edytuj kategorię produktów";
+                ViewBag.ErrorMessage = "Nie znaleziono kategorii o danym identyfikatorze";
+
+                return View("Error");
+            }
+
+            var model = new EditProductCategoryViewModel()
+            {
+                Id = id,
+                ProductCategoryName = productCategory.Name
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult EditProductCategory(EditProductCategoryViewModel model)
+        {
+            var productCategory = productCategoryRepository.GetById(model.Id);
+
+            if (productCategory == null)
+            {
+                ViewBag.Title = "Edytuj kategorię produktów";
+                ViewBag.ErrorMessage = "Nie znaleziono kategorii o danym identyfikatorze";
+
+                return View("Error");
+            }
+
+            productCategory.Name = model.ProductCategoryName;
+            productCategoryRepository.Update(productCategory);
+            productCategoryRepository.Save();
+
+            return RedirectToAction("ListProductCategories");
+        }
+
+        [HttpPost]
+        public IActionResult DeleteProductCategory(int id)
+        {
+            var productCategory = productCategoryRepository.GetById(id);
+
+            if (productCategory == null)
+            {
+                ViewBag.Title = "Usuń kategorię produktów";
+                ViewBag.ErrorMessage = "Nie znaleziono kategorii o danym identyfikatorze";
+            }
+
+            productCategoryRepository.Delete(productCategory.Id);
+            productCategoryRepository.Save();
+
+            return RedirectToAction("ListProductCategories");
+        }
+
         #endregion Product Category Actions
     }
 }

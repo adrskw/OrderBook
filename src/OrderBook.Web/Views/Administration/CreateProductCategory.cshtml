@@ -1,0 +1,24 @@
+﻿@model CreateProductCategoryViewModel
+@{
+    ViewBag.Title = "Stwórz nową kategorię produktów";
+}
+
+<h2 class="pt-3 mb-3">@ViewBag.Title</h2>
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger validation-summary-unstyled"></div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label asp-for="ProductCategoryName"></label>
+            <input asp-for="ProductCategoryName" class="form-control">
+            <span asp-validation-for="ProductCategoryName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <a asp-controller="Administration" asp-action="ListProductCategories" class="btn btn-secondary mr-1">Wróć</a>
+
+            <button type="submit" class="btn btn-primary">Stwórz</button>
+        </div>
+    </div>
+</form>
