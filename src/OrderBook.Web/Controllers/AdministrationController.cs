@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.Differencing;
 using OrderBook.Web.Models;
 using OrderBook.Web.Repositories;
@@ -16,6 +17,7 @@ namespace OrderBook.Web.Controllers
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IProductRepository productRepository;
         private readonly IProductCategoryRepository productCategoryRepository;
 
         public AdministrationController(RoleManager<IdentityRole> roleManager,
@@ -107,37 +109,40 @@ namespace OrderBook.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> EditEmployee(EditEmployeeViewModel model)
         {
-            ViewBag.Title = "Edytuj pracownika";
-
-            var employee = await userManager.FindByIdAsync(model.Id);
-
-            if (employee == null)
+            if (ModelState.IsValid)
             {
-                ViewBag.ErrorMessage = "Nie znaleziono pracownika o danym identyfikatorze";
+                ViewBag.Title = "Edytuj pracownika";
 
-                return View("Error");
-            }
-            else if (employee.UserName == "admin" && employee.UserName != model.Login)
-            {
-                ModelState.AddModelError("login", "Nie można zmienić loginu administratora");
-            }
-            else
-            {
-                employee.UserName = model.Login;
-                employee.Email = model.Email;
-                employee.FirstName = model.FirstName;
-                employee.LastName = model.LastName;
+                var employee = await userManager.FindByIdAsync(model.Id);
 
-                var result = await userManager.UpdateAsync(employee);
-
-                if (result.Succeeded)
+                if (employee == null)
                 {
-                    return RedirectToAction("ListEmployees");
+                    ViewBag.ErrorMessage = "Nie znaleziono pracownika o danym identyfikatorze";
+
+                    return View("Error");
                 }
-
-                foreach (var error in result.Errors)
+                else if (employee.UserName == "admin" && employee.UserName != model.Login)
                 {
-                    ModelState.AddModelError("", error.Description);
+                    ModelState.AddModelError("login", "Nie można zmienić loginu administratora");
+                }
+                else
+                {
+                    employee.UserName = model.Login;
+                    employee.Email = model.Email;
+                    employee.FirstName = model.FirstName;
+                    employee.LastName = model.LastName;
+
+                    var result = await userManager.UpdateAsync(employee);
+
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("ListEmployees");
+                    }
+
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
                 }
             }
 
@@ -250,35 +255,38 @@ namespace OrderBook.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> EditPosition(EditPositionViewModel model)
         {
-            ViewBag.Title = "Edytuj stanowisko";
-
-            var position = await roleManager.FindByIdAsync(model.Id);
-
-            if (position == null)
+            if (ModelState.IsValid)
             {
-                ViewBag.ErrorMessage = "Nie znaleziono stanowiska o danym identyfikatorze";
+                ViewBag.Title = "Edytuj stanowisko";
 
-                return View("Error");
-            }
-            else if (position.Name == "Admin")
-            {
-                ViewBag.ErrorMessage = "Nie możesz edytować stanowiska administratora";
+                var position = await roleManager.FindByIdAsync(model.Id);
 
-                return View("Error");
-            }
-            else
-            {
-                position.Name = model.PositionName;
-                var result = await roleManager.UpdateAsync(position);
-
-                if (result.Succeeded)
+                if (position == null)
                 {
-                    return RedirectToAction("ListPositions");
+                    ViewBag.ErrorMessage = "Nie znaleziono stanowiska o danym identyfikatorze";
+
+                    return View("Error");
                 }
-
-                foreach (var error in result.Errors)
+                else if (position.Name == "Admin")
                 {
-                    ModelState.AddModelError("", error.Description);
+                    ViewBag.ErrorMessage = "Nie możesz edytować stanowiska administratora";
+
+                    return View("Error");
+                }
+                else
+                {
+                    position.Name = model.PositionName;
+                    var result = await roleManager.UpdateAsync(position);
+
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("ListPositions");
+                    }
+
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
                 }
             }
 
@@ -387,21 +395,26 @@ namespace OrderBook.Web.Controllers
         [HttpPost]
         public IActionResult EditProductCategory(EditProductCategoryViewModel model)
         {
-            var productCategory = productCategoryRepository.GetById(model.Id);
-
-            if (productCategory == null)
+            if (ModelState.IsValid)
             {
-                ViewBag.Title = "Edytuj kategorię produktów";
-                ViewBag.ErrorMessage = "Nie znaleziono kategorii o danym identyfikatorze";
+                var productCategory = productCategoryRepository.GetById(model.Id);
 
-                return View("Error");
+                if (productCategory == null)
+                {
+                    ViewBag.Title = "Edytuj kategorię produktów";
+                    ViewBag.ErrorMessage = "Nie znaleziono kategorii o danym identyfikatorze";
+
+                    return View("Error");
+                }
+
+                productCategory.Name = model.ProductCategoryName;
+                productCategoryRepository.Update(productCategory);
+                productCategoryRepository.Save();
+
+                return RedirectToAction("ListProductCategories");
             }
 
-            productCategory.Name = model.ProductCategoryName;
-            productCategoryRepository.Update(productCategory);
-            productCategoryRepository.Save();
-
-            return RedirectToAction("ListProductCategories");
+            return View(model);
         }
 
         [HttpPost]
