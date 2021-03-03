@@ -28,9 +28,6 @@ namespace OrderBook.Web.Models
         public decimal PaidAmount { get; set; }
 
         [Required]
-        public string Currency { get; set; }
-
-        [Required]
         public DateTime FinishedAt { get; set; }
 
         [Required]

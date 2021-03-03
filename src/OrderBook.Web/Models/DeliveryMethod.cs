@@ -20,15 +20,11 @@ namespace OrderBook.Web.Models
         [Required]
         public DeliveryMethodCarrier Carrier { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
         [Required]
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
-
-        [Required]
-        public string Currency { get; set; }
 
         [Required]
         public bool IsCashOnDelivery { get; set; }

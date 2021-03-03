@@ -22,9 +22,6 @@ namespace OrderBook.Web.Models
         public decimal UnitPrice { get; set; }
 
         [Required]
-        public string Currency { get; set; }
-
-        [Required]
         public int Quantity { get; set; }
     }
 }

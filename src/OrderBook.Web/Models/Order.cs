@@ -46,8 +46,6 @@ namespace OrderBook.Web.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalToPay { get; set; }
 
-        public string Currency { get; set; }
-
         public bool IsInvoiceRequired { get; set; }
 
         [Required]

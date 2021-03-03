@@ -20,9 +20,6 @@ namespace OrderBook.Web.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
-        [Required]
-        public string Currency { get; set; }
-
         public int AllegroOfferId { get; set; }
 
         public ICollection<OrderDetail> OrderDetails { get; set; }
