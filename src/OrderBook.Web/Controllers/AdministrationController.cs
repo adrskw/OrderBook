@@ -334,6 +334,138 @@ namespace OrderBook.Web.Controllers
             return View(products);
         }
 
+        [HttpGet]
+        public IActionResult CreateProduct()
+        {
+            var productCategoriesList = productCategoryRepository.GetAllProductCategories();
+
+            var model = new CreateProductViewModel()
+            {
+                ProductCategorySelectList = new SelectList(productCategoriesList, "Id", "Name")
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult CreateProduct(CreateProductViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var productCategory = productCategoryRepository.GetById(model.ProductCategoryId.GetValueOrDefault());
+
+                if (model.ProductCategoryId != null && productCategory == null)
+                {
+                    ViewBag.Title = "Dodaj produkt";
+                    ViewBag.ErrorMessage = "Wybrano nieprawidłową kategorię";
+
+                    return View("Error");
+                }
+
+                Product product = new Product()
+                {
+                    Category = productCategory,
+                    Name = model.ProductName,
+                    Price = model.ProductPrice,
+                    AllegroOfferId = model.AllegroOfferId.GetValueOrDefault()
+                };
+
+                productRepository.Add(product);
+                productRepository.Save();
+
+                return RedirectToAction("ListProducts");
+            }
+
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult EditProduct(int id)
+        {
+            var product = productRepository.GetById(id);
+
+            if (product == null)
+            {
+                ViewBag.Title = "Edytuj produkt";
+                ViewBag.ErrorMessage = "Nie znaleziono produktu o danym identyfikatorze";
+
+                return View("Error");
+            }
+
+            var productCategoriesList = productCategoryRepository.GetAllProductCategories();
+
+            var model = new EditProductViewModel()
+            {
+                Id = product.Id,
+                ProductName = product.Name,
+                ProductCategoryId = product.Category?.Id,
+                ProductCategorySelectList = new SelectList(productCategoriesList, "Id", "Name"),
+                ProductPrice = product.Price,
+                AllegroOfferId = product.AllegroOfferId
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult EditProduct(EditProductViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var product = productRepository.GetById(model.Id);
+
+                if (product == null)
+                {
+                    ViewBag.Title = "Edytuj produkt";
+                    ViewBag.ErrorMessage = "Nie znaleziono produktu o danym identyfikatorze";
+
+                    return View("Error");
+                }
+
+                var productCategory = productCategoryRepository.GetById(model.ProductCategoryId.GetValueOrDefault());
+
+                if (model.ProductCategoryId != null && productCategory == null)
+                {
+                    var productCategoriesList = productCategoryRepository.GetAllProductCategories();
+                    model.ProductCategorySelectList = new SelectList(productCategoriesList, "Id", "Name");
+                    model.ProductCategoryId = product.Category?.Id;
+
+                    ModelState.AddModelError(nameof(model.ProductCategoryId), "Wybrano nieprawidłową kategorię");
+                }
+                else
+                {
+                    product.Name = model.ProductName;
+                    product.Category = productCategory;
+                    product.Price = model.ProductPrice;
+                    product.AllegroOfferId = model.AllegroOfferId.GetValueOrDefault();
+
+                    productRepository.Update(product);
+                    productRepository.Save();
+
+                    return RedirectToAction("ListProducts");
+                }
+            }
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteProduct(int id)
+        {
+            var product = productRepository.GetById(id);
+
+            if (product == null)
+            {
+                ViewBag.Title = "Usuń produkt";
+                ViewBag.ErrorMessage = "Nie znaleziono produktu o danym identyfikatorze";
+            }
+
+            productRepository.Delete(product.Id);
+            productRepository.Save();
+
+            return RedirectToAction("ListProducts");
+        }
+
         #endregion Product Actions
 
         #region Product Category Actions
