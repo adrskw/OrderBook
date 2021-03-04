@@ -375,6 +375,15 @@ namespace OrderBook.Web.Controllers
 
                 return RedirectToAction("ListProducts");
             }
+            else
+            {
+                var productCategoriesList = productCategoryRepository.GetAllProductCategories();
+
+                model = new CreateProductViewModel()
+                {
+                    ProductCategorySelectList = new SelectList(productCategoriesList, "Id", "Name")
+                };
+            }
 
             return View(model);
         }
@@ -444,6 +453,15 @@ namespace OrderBook.Web.Controllers
 
                     return RedirectToAction("ListProducts");
                 }
+            }
+            else
+            {
+                var productCategoriesList = productCategoryRepository.GetAllProductCategories();
+
+                model = new EditProductViewModel()
+                {
+                    ProductCategorySelectList = new SelectList(productCategoriesList, "Id", "Name")
+                };
             }
 
             return View(model);
