@@ -476,6 +476,8 @@ namespace OrderBook.Web.Controllers
             {
                 ViewBag.Title = "Usuń produkt";
                 ViewBag.ErrorMessage = "Nie znaleziono produktu o danym identyfikatorze";
+
+                return View("Error");
             }
 
             productRepository.Delete(product.Id);
@@ -576,6 +578,8 @@ namespace OrderBook.Web.Controllers
             {
                 ViewBag.Title = "Usuń kategorię produktów";
                 ViewBag.ErrorMessage = "Nie znaleziono kategorii o danym identyfikatorze";
+
+                return View("Error");
             }
 
             productCategoryRepository.Delete(productCategory.Id);

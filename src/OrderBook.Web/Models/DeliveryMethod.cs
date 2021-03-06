@@ -10,7 +10,10 @@ namespace OrderBook.Web.Models
     public enum DeliveryMethodCarrier
     {
         GLS,
-        InpostPaczkomaty
+        DHL,
+        DPD,
+        InpostPaczkomaty,
+        PaczkaWRuchu
     }
 
     public class DeliveryMethod : IDeletable

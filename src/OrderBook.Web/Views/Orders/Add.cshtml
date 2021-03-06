@@ -1,0 +1,259 @@
+﻿@model AddOrderViewModel
+@{
+    ViewBag.Title = "Dodaj nowe zamówienie";
+}
+
+<h2 class="pt-3 mb-3">@ViewBag.Title</h2>
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger validation-summary-unstyled"></div>
+    <p class="h5">Dane klienta</p>
+    <div class="form-row">
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="CustomerFirstName"></label>
+            <input asp-for="CustomerFirstName" class="form-control">
+            <span asp-validation-for="CustomerFirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="CustomerLastName"></label>
+            <input asp-for="CustomerLastName" class="form-control">
+            <span asp-validation-for="CustomerLastName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="CustomerCompanyName"></label>
+            <input asp-for="CustomerCompanyName" class="form-control">
+            <span asp-validation-for="CustomerCompanyName" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="CustomerEmail"></label>
+            <input asp-for="CustomerEmail" class="form-control">
+            <span asp-validation-for="CustomerEmail" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="CustomerPhoneNumber"></label>
+            <input asp-for="CustomerPhoneNumber" class="form-control">
+            <span asp-validation-for="CustomerPhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="CustomerNote"></label>
+            <textarea asp-for="CustomerNote" class="form-control" style="height: calc(1.5em + 0.75rem + 2px);min-height: calc(1.5em + 0.75rem + 2px);"></textarea>
+            <span asp-validation-for="CustomerNote" class="text-danger"></span>
+        </div>
+    </div>
+
+    <p class="h5">Adres klienta</p>
+    <div class="form-row">
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="CustomerAddressStreet"></label>
+            <input asp-for="CustomerAddressStreet" class="form-control">
+            <span asp-validation-for="CustomerAddressStreet" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="CustomerAddressCity"></label>
+            <input asp-for="CustomerAddressCity" class="form-control">
+            <span asp-validation-for="CustomerAddressCity" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="CustomerAddressZipCode"></label>
+            <input asp-for="CustomerAddressZipCode" class="form-control">
+            <span asp-validation-for="CustomerAddressZipCode" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="CustomerAddressCountry"></label>
+            <input asp-for="CustomerAddressCountry" class="form-control">
+            <span asp-validation-for="CustomerAddressCountry" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-row ml-0">
+        <p class="h5">Dane do faktury</p>
+        <div class="form-group ml-3">
+            <div class="custom-control custom-checkbox">
+                <input asp-for="CustomerInvoiceIsInvoiceRequired" class="custom-control-input">
+                <label asp-for="CustomerInvoiceIsInvoiceRequired" class="custom-control-label"></label>
+            </div>
+        </div>
+    </div>
+    <div id="invoiceFormData">
+        <div class="form-row">
+            <div class="form-group col-md-6 col-lg-3">
+                <label asp-for="CustomerInvoiceCompanyName"></label>
+                <input asp-for="CustomerInvoiceCompanyName" class="form-control">
+                <span asp-validation-for="CustomerInvoiceCompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6 col-lg-3">
+                <label asp-for="CustomerInvoiceNaturalPersonName"></label>
+                <input asp-for="CustomerInvoiceNaturalPersonName" class="form-control">
+                <span asp-validation-for="CustomerInvoiceNaturalPersonName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6 col-lg-3">
+                <label asp-for="CustomerInvoiceStreet"></label>
+                <input asp-for="CustomerInvoiceStreet" class="form-control">
+                <span asp-validation-for="CustomerInvoiceStreet" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6 col-lg-3">
+                <label asp-for="CustomerInvoiceCity"></label>
+                <input asp-for="CustomerInvoiceCity" class="form-control">
+                <span asp-validation-for="CustomerInvoiceCity" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6 col-lg-3">
+                <label asp-for="CustomerInvoiceZipCode"></label>
+                <input asp-for="CustomerInvoiceZipCode" class="form-control">
+                <span asp-validation-for="CustomerInvoiceZipCode" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6 col-lg-3">
+                <label asp-for="CustomerInvoiceCountry"></label>
+                <input asp-for="CustomerInvoiceCountry" class="form-control">
+                <span asp-validation-for="CustomerInvoiceCountry" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6 col-lg-3">
+                <label asp-for="CustomerInvoiceCompanyTaxId"></label>
+                <input asp-for="CustomerInvoiceCompanyTaxId" class="form-control">
+                <span asp-validation-for="CustomerInvoiceCompanyTaxId" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row ml-0">
+        <p class="h5">Metoda dostawy</p>
+        <div class="form-group ml-3">
+            <div class="custom-control custom-checkbox">
+                <input asp-for="DeliveryMethodIsCashOnDelivery" class="custom-control-input">
+                <label asp-for="DeliveryMethodIsCashOnDelivery" class="custom-control-label"></label>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="DeliveryMethodCarrier"></label>
+            <select asp-for="DeliveryMethodCarrier" asp-items="Model.AvailableCarriersSelectList" class="custom-select">
+                <option value="" selected="selected">Wybierz dostawcę</option>
+            </select>
+            <span asp-validation-for="DeliveryMethodCarrier" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="DeliveryMethodPrice"></label>
+            <input asp-for="DeliveryMethodPrice" class="form-control">
+            <span asp-validation-for="DeliveryMethodPrice" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="DeliveryMethodNumberOfPackages"></label>
+            <input asp-for="DeliveryMethodNumberOfPackages" class="form-control">
+            <span asp-validation-for="DeliveryMethodNumberOfPackages" class="text-danger"></span>
+        </div>
+    </div>
+
+    <p class="h5">Dane dostawy</p>
+    <div class="form-row">
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="DeliveryAddressFirstName"></label>
+            <input asp-for="DeliveryAddressFirstName" class="form-control">
+            <span asp-validation-for="DeliveryAddressFirstName" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="DeliveryAddressLastName"></label>
+            <input asp-for="DeliveryAddressLastName" class="form-control">
+            <span asp-validation-for="DeliveryAddressLastName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="DeliveryAddressCompanyName"></label>
+            <input asp-for="DeliveryAddressCompanyName" class="form-control">
+            <span asp-validation-for="DeliveryAddressCompanyName" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="DeliveryAddressPhoneNumber"></label>
+            <input asp-for="DeliveryAddressPhoneNumber" class="form-control">
+            <span asp-validation-for="DeliveryAddressPhoneNumber" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="DeliveryAddressStreet"></label>
+            <input asp-for="DeliveryAddressStreet" class="form-control">
+            <span asp-validation-for="DeliveryAddressStreet" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="DeliveryAddressCity"></label>
+            <input asp-for="DeliveryAddressCity" class="form-control">
+            <span asp-validation-for="DeliveryAddressCity" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="DeliveryAddressZipCode"></label>
+            <input asp-for="DeliveryAddressZipCode" class="form-control">
+            <span asp-validation-for="DeliveryAddressZipCode" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="DeliveryAddressCountry"></label>
+            <input asp-for="DeliveryAddressCountry" class="form-control">
+            <span asp-validation-for="DeliveryAddressCountry" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-row ml-0">
+        <p class="h5">Zamówione produkty</p>
+        <div class="form-group ml-3">
+            <button id="addProduct" type="button" class="btn btn-success btn-sm">+</button>
+            <button id="removeProduct" type="button" class="btn btn-danger btn-sm">-</button>
+        </div>
+    </div>
+    <div id="orderedProducts">
+        <div class="form-row">
+            <div class="form-group col-md-6 col-lg-3">
+                <label asp-for="ProductIds"></label>
+                <select asp-for="ProductIds" asp-items="Model.AvailableProductsSelectList" class="custom-select">
+                </select>
+                <span asp-validation-for="ProductIds" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6 col-lg-3">
+                <label asp-for="ProductQuantities"></label>
+                <input asp-for="ProductQuantities" class="form-control">
+                <span asp-validation-for="ProductQuantities" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <p class="h5">Informacje o zamówieniu</p>
+    <div class="form-row">
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="OrderStatus"></label>
+            <select asp-for="OrderStatus" asp-items="Model.OrderStatusSelectList" class="custom-select">
+                <option value="">Wybierz status zamówienia</option>
+            </select>
+            <span asp-validation-for="OrderStatus" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label asp-for="OrderNote"></label>
+            <textarea asp-for="OrderNote" class="form-control" style="height: calc(1.5em + 0.75rem + 2px);min-height: calc(1.5em + 0.75rem + 2px);"></textarea>
+            <span asp-validation-for="OrderNote" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <a asp-controller="Orders" asp-action="Index" class="btn btn-secondary mr-1">Wróć</a>
+
+            <button type="submit" class="btn btn-primary">Dodaj</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/js/addOrderForm.js"></script>
+}

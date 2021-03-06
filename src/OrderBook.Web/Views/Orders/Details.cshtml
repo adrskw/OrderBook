@@ -1,0 +1,83 @@
+﻿@model Order
+@{
+    ViewBag.Title = "Szczegóły zamówienia";
+}
+
+<h2 class="pt-3 mb-3">@ViewBag.Title</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-lg-4 mt-2">
+            <p class="h5">Dane klienta</p>
+            <p class="pre-line-whitespace m-0">@Model.Customer.CompanyName</p>
+            <p class="pre-line-whitespace m-0">@Model.Customer.FirstName @Model.Customer.LastName</p>
+            <p class="pre-line-whitespace m-0">@Model.Customer.Address.Street</p>
+            <p class="pre-line-whitespace m-0">@Model.Customer.Address.ZipCode @Model.Customer.Address.City, @Model.Customer.Address.Country</p>
+            <p class="pre-line-whitespace m-0">@Model.Customer.Email</p>
+            <p class="pre-line-whitespace m-0">@Model.Customer.PhoneNumber</p>
+        </div>
+        <div class="col-md-6 col-lg-4 mt-2">
+            <p class="h5">Szczegóły dostawy</p>
+            <p class="pre-line-whitespace m-0">Przewoźnik: @Model.DeliveryMethod.Carrier.ToString()</p>
+            <p class="pre-line-whitespace m-0">Płatność przy odbiorze: @((Model.DeliveryMethod.IsCashOnDelivery) ? "Tak" : "Nie")</p>
+            <p class="pre-line-whitespace m-0">Liczba paczek: @Model.NumberOfPackages</p>
+        </div>
+        <div class="col-md-6 col-lg-4 mt-2">
+            <p class="h5">Adres dostawy</p>
+            <p class="pre-line-whitespace m-0">@Model.SelectedDeliveryAddress.CompanyName</p>
+            <p class="pre-line-whitespace m-0">@Model.SelectedDeliveryAddress.FirstName @Model.SelectedDeliveryAddress.LastName</p>
+            <p class="pre-line-whitespace m-0">@Model.SelectedDeliveryAddress.Street</p>
+            <p class="pre-line-whitespace m-0">@Model.SelectedDeliveryAddress.ZipCode @Model.SelectedDeliveryAddress.City, @Model.SelectedDeliveryAddress.Country</p>
+            <p class="pre-line-whitespace m-0">@Model.SelectedDeliveryAddress.PhoneNumber</p>
+        </div>
+        @if (Model.IsInvoiceRequired)
+        {
+            <div class="col-md-6 col-lg-4 mt-2">
+                <p class="h5">Dane do faktury</p>
+                <p class="pre-line-whitespace m-0">@Model.Customer.Invoice.CompanyName</p>
+                <p class="pre-line-whitespace m-0">@Model.Customer.Invoice.NaturalPersonName</p>
+                <p class="pre-line-whitespace m-0">@Model.Customer.Invoice.Street</p>
+                <p class="pre-line-whitespace m-0">@Model.Customer.Address.ZipCode @Model.Customer.Invoice.City, @Model.Customer.Invoice.Country</p>
+                <p class="pre-line-whitespace m-0">NIP: @Model.Customer.Invoice.CompanyTaxId</p>
+            </div>
+        }
+        <div class="col-md-6 col-lg-4 mt-2">
+            <p class="h5">Informacje ogólne</p>
+            <p class="pre-line-whitespace m-0">Data zamówienia: @Model.OrderDate.ToString("dd.MM.yyyy HH:mm")</p>
+            <p class="pre-line-whitespace m-0">Status: @Model.Status.ToString()</p>
+            <p class="pre-line-whitespace m-0">Łącznie do zapłaty: @Model.TotalToPay</p>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <p class="h5">Zamówione produkty</p>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th class="w-100">Przedmiot</th>
+                            <th>Ilość</th>
+                            <th>Cena</th>
+                            <th class="text-right text-nowrap">Łączna wartość</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var orderDetail in Model.Products)
+                        {
+                            <tr>
+                                <td>@orderDetail.Product.Name</td>
+                                <td>@orderDetail.Quantity</td>
+                                <td>@orderDetail.UnitPrice</td>
+                                <td class="text-right">@(orderDetail.UnitPrice * orderDetail.Quantity)</td>
+                            </tr>
+                        }
+                        <tr>
+                            <td colspan="3" class="text-right">Łącznie do zapłaty:</td>
+                            <td class="text-right">@Model.TotalToPay</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<a asp-controller="Orders" asp-action="Index" class="btn btn-secondary mb-4">Wróć</a>

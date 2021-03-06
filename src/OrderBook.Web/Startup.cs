@@ -47,6 +47,10 @@ namespace OrderBook.Web
                                 .RequireAuthenticatedUser()
                                 .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
+            })
+            .AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
             services.AddScoped<IOrderRepository, OrderRepository>();
@@ -82,7 +86,7 @@ namespace OrderBook.Web
 
             app.UseStaticFiles();
             app.UseRouting();
-
+            app.UseAuthorization();
             app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>

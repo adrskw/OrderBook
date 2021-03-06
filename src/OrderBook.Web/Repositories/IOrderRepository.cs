@@ -19,5 +19,8 @@ namespace OrderBook.Web.Repositories
         void Delete(int id);
 
         void Save();
+
+        IEnumerable<Order> FindAll(string searchValue, OrderStatus? orderStatus, int limit, int skip,
+            string sortBy, bool isSortedAsc, out int filteredResultsCount, out int totalResultsCount);
     }
 }
